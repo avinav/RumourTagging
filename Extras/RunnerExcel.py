@@ -7,6 +7,7 @@ from Indexer.index import Index
 import numpy as np
 import operator
 from Extras.confusion_matrix import *
+from collections import Counter
 
 def get_docSpace_excel(filename, sheetname, col_no):
     docMap = {}
@@ -91,3 +92,16 @@ def generate_roc_curve(search_text_list, docMap, queryIndex, thresh_list, true_l
     plt.xlabel("FPR of Rumour")
     plt.ylabel("TPR of Rumour")
     pylab.savefig(fig_title + ".png",format="png")
+    
+    
+def generate_result(doc_names, true_labels, pred_labels, title):
+    count_dict = Counter(true_labels)
+    num_labels = np.array([count_dict[lab] for lab in doc_names])
+    conf_matrix, conf_matrix_string = confusion_matrix(true_labels, pred_labels, doc_names)
+    tpr,fpr = roc_tpr_fpr(true_labels,pred_labels)
+    print tpr,fpr
+    acc = getAccuracy(conf_matrix, num_labels)
+    print acc, np.average(np.array(pred_labels) == np.array(true_labels))
+    print "---------------"
+    display_confusion_matrix(conf_matrix, conf_matrix_string, num_labels, doc_names,title)
+    return conf_matrix, conf_matrix_string, tpr, fpr, acc
