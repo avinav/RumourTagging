@@ -1,5 +1,6 @@
 from Extras.RunnerExcel import get_docSpace_excel
 from Extras.RunnerExcel import get_tweet_excel
+from Extras.RunnerExcel import generate_result
 from Extras.RunnerExcel import query_list_vsm
 from Extras.confusion_matrix import *
 from Extras.RunnerExcel import generate_roc_curve
@@ -32,13 +33,5 @@ thresh = 0.6
 pred_labels = query_list_vsm(search_text_list, docMap, queryIndex, thresh)
  
 doc_names = ['R1','R3','R4','R5','R7','NA']
-count_dict = Counter(true_labels)
-num_labels = np.array([count_dict[lab] for lab in doc_names])
-conf_matrix, conf_matrix_string = confusion_matrix(true_labels, pred_labels, doc_names)
-tpr,fpr = roc_tpr_fpr(true_labels,pred_labels)
-print thresh
-print tpr,fpr
-acc = getAccuracy(conf_matrix, num_labels)
-print acc, np.average(np.array(pred_labels) == np.array(true_labels))
-print "---------------"
-# # display_confusion_matrix(conf_matrix, conf_matrix_string, num_labels, doc_names,"VSM_" +str(thresh))
+title = "VSM_" +str(thresh)
+conf_matrix, conf_matrix_string, tpr, fpr, acc = generate_result(doc_names, true_labels, pred_labels, title)
