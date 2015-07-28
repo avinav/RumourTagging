@@ -30,14 +30,14 @@ thresh = 0.1
 # print score_dict
 counter = 0
 for text in search_text_list:
-    if (counter >= 3):
-        break;
+#     if (counter >= 3):
+#         break;
     score_dict = gp.query(text, tgMap, termMap)
-    print score_dict
+#     print score_dict
     pred_labels.append(gp.result_tag(score_dict, docMap, thresh))
     counter += 1
     
 
-# doc_names = ['R1','R3','R4','R5','R7','NA']
-# title = "Graph_" +str(thresh)
-# conf_matrix, conf_matrix_string, tpr, fpr, acc = generate_result(doc_names, true_labels, pred_labels, title)
+doc_names = ['R1','R3','R4','R5','R7','NA']
+title = "Graph_" +str(thresh)
+conf_matrix, conf_matrix_string, tpr, fpr, acc = generate_result(doc_names, true_labels, pred_labels, title)

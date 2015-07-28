@@ -15,7 +15,7 @@ graph.vs["idf"] = [2,3]
 # print graph.vs[0].index,graph.es[0].source,graph.es[1].target
 
 kwds = {'idf':2, 'count' : 4}
-g = ig.Graph(directed=False)
+g = ig.Graph(directed=True)
 # g.add_vertex(name='hello',count = 4, idf =6)
 # g.add_vertex(name = 'world',count = 3, idf=9)
 # g.add_vertex(name = 'avinav',count = 3, idf=9)
@@ -30,4 +30,4 @@ g.add_vertices(4)
 g.add_edges([(0,1),(1,2),(2,3)])
 print g
 print g.es.select(_between=([2],[1]))[0].index
-print len(g.es.select(_from=1, _to=0))
+print g.get_eid(2,1,error=False)

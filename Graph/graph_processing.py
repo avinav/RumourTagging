@@ -19,8 +19,9 @@ def edges_between(tweetGraph, source_name, target_name):
 #     print "--",source_name,target_name
     for source in source_vs:
         for target in target_vs:
-            print "----",source,target
-            n_edges += len(tweetGraph.graph.es.select(_source=source,_target=target)) 
+#             print "----",source,target
+            n_edges += 1 if (tweetGraph.graph.get_eid(source,target,error=False) != -1) else 0
+#             n_edges += len(tweetGraph.graph.es.select(_source=source,_target=target)) 
     return n_edges
 
 def subgraph_score(tweetGraph1, tweetGraph2):
@@ -36,7 +37,7 @@ def subgraph_score(tweetGraph1, tweetGraph2):
 def query(text, tgMap, termMap):
     term_list = get_term_list(text)
     text_graph = TweetGraph(id = 10, term_list = term_list, termMap = termMap)
-    print text_graph.graph
+#     print text_graph.graph
     score_dict = {}
     for _id, tweetGraph in tgMap.items():
         score_dict[_id] = subgraph_score(text_graph, tweetGraph)
